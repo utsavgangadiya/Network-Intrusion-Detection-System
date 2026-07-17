@@ -235,7 +235,7 @@ Main libraries used:
 
 **Utsav Gangadiya**
 
-**Python Developer | AI & Machine Learning Enthusiast**
+**📊 Data Analyst | 🤖 Machine Learning & AI | Python • SQL • Power BI | Turning data into decisions**
 
 - 🔗 GitHub: https://github.com/utsavgangadiya
 - 💼 LinkedIn: https://www.linkedin.com/in/utsav-gangadiya/
