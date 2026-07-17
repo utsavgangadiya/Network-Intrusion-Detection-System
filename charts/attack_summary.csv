@@ -1,0 +1,7 @@
+Attack Type,Count,Percentage
+Normal Traffic,1325656,85.22
+DDoS,128014,8.23
+Port Scanning,90694,5.83
+Brute Force,9150,0.59
+Web Attacks,2143,0.14
+Bots,2,0.0
