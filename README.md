@@ -1,22 +1,18 @@
 # 🛡️ Network Intrusion Detection System (NIDS)
 
-A **Machine Learning-based Network Intrusion Detection System (NIDS)** that detects and classifies malicious network traffic using multiple Machine Learning algorithms. The best-performing model (**XGBoost**) is deployed through an interactive **Streamlit** web application for easy prediction and testing.
-
-## 🌐 Live Demo
-
-🔗 **https://network-intrusion-detection-system-utsav.streamlit.app/**
+A **Machine Learning-based Network Intrusion Detection System (NIDS)** developed using the **CICIDS2017** dataset. This project detects malicious network traffic and classifies different types of cyber attacks using multiple machine learning algorithms. The final deployed model is **XGBoost**, integrated into an interactive **Streamlit** web application.
 
 ---
 
 ## 📌 Features
 
-- 📂 Upload a CSV file for batch prediction
-- 📝 Manual prediction using network traffic features
+- 📂 Upload a CSV file for batch network traffic prediction
+- 📝 Manual prediction using sample feature values
 - 📊 Interactive prediction summary and visualization
 - 📥 Download prediction results as CSV
 - 🤖 Detects multiple cyber attack types
 - ⚡ Fast predictions using a trained XGBoost model
-- 🌐 Live Streamlit web application
+- 🌐 Ready for deployment on Streamlit Cloud
 
 ---
 
@@ -39,7 +35,7 @@ The following models were trained and evaluated:
 - Logistic Regression
 - Decision Tree
 - Random Forest
-- **XGBoost (Selected Model)**
+- **XGBoost (Best Model)**
 
 ### Model Performance
 
@@ -58,49 +54,51 @@ The following models were trained and evaluated:
 NIDS/
 │
 ├── app.py
-├── README.md
+├── nids.ipynb
 ├── requirements.txt
-├── runtime.txt
+├── README.md
 ├── .gitignore
 │
-├── .streamlit/
-├── charts/
-├── img/
+├── models/
+│   ├── network_intrusion_detector.pkl
+│   ├── label_encoder.pkl
+│   ├── logistic_regression.pkl
+│   ├── decision_tree.pkl
+│   ├── random_forest.pkl
+│   ├── xgboost.pkl
+│   ├── scaler.pkl
+│   └── model_comparison.csv
 │
-└── models/
-    ├── network_intrusion_detector.pkl
-    ├── label_encoder.pkl
-    ├── decision_tree.pkl
-    ├── logistic_regression.pkl
-    ├── random_forest.pkl
-    ├── scaler.pkl
-    ├── xgboost.pkl
-    └── model_comparison.csv
+├── charts/
+│
+├── cicids2017_cleaned.csv
+├── cicids2017_final_cleaned.csv
+└── cicids2017_sample.csv
 ```
 
 ---
 
-# ⚙️ Installation
+# ⚙️ Setup Locally
 
-### Clone the repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/utsavgangadiya/Network-Intrusion-Detection-System.git
 ```
 
-### Navigate to the project
+### 2. Navigate to the project
 
 ```bash
 cd Network-Intrusion-Detection-System
 ```
 
-### Create a virtual environment (Optional)
+### 3. (Optional) Create a virtual environment
 
 ```bash
 python -m venv venv
 ```
 
-### Activate the environment
+Activate it
 
 **Windows**
 
@@ -114,13 +112,13 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-### Install dependencies
+### 4. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Run the application
+### 5. Run the application
 
 ```bash
 streamlit run app.py
@@ -128,46 +126,46 @@ streamlit run app.py
 
 ---
 
-# 🚀 Deployment
+# 🌐 Deploy on Streamlit Cloud
 
-The application is deployed using **Streamlit Community Cloud**.
+1. Push the project to GitHub.
+2. Open **Streamlit Community Cloud**.
+3. Click **New App**.
+4. Select your GitHub repository.
+5. Set the main file as:
 
-**Live Application**
+```text
+app.py
+```
 
-🔗 https://network-intrusion-detection-system-utsav.streamlit.app/
+6. Click **Deploy**.
 
 ---
 
 # 📈 Project Workflow
 
 ```text
-CICIDS2017 Dataset
-        │
-        ▼
+Dataset
+      │
+      ▼
 Data Cleaning
-        │
-        ▼
-Exploratory Data Analysis (EDA)
-        │
-        ▼
+      │
+      ▼
+Exploratory Data Analysis
+      │
+      ▼
 Data Preprocessing
-        │
-        ▼
-Train-Test Split
-        │
-        ▼
+      │
+      ▼
 Model Training
-        │
-        ▼
+      │
+      ▼
 Model Evaluation
-        │
-        ▼
+      │
+      ▼
 Best Model Selection (XGBoost)
-        │
-        ▼
-Model Serialization (Joblib)
-        │
-        ▼
+      │
+      ▼
 Streamlit Deployment
 ```
 
@@ -188,7 +186,9 @@ Streamlit Deployment
 
 # 📂 Dataset
 
-This project uses the **CICIDS2017** dataset, which contains labeled network traffic representing both normal activity and multiple intrusion types. It is widely used for training and evaluating machine learning models for intrusion detection.
+**Dataset:** CICIDS2017
+
+The CICIDS2017 dataset contains labeled network traffic flows used for intrusion detection research. It includes multiple attack categories and normal traffic records, making it suitable for training and evaluating machine learning models for network security.
 
 ---
 
@@ -200,12 +200,12 @@ Install all dependencies using:
 pip install -r requirements.txt
 ```
 
-Main libraries:
+Main libraries used:
 
 - Streamlit
 - Pandas
 - NumPy
-- Scikit-learn
+- scikit-learn
 - XGBoost
 - Joblib
 - Matplotlib
@@ -214,20 +214,20 @@ Main libraries:
 
 # 📌 Notes
 
-- The trained model is loaded directly from the **models/** folder, so retraining is not required.
-- The uploaded CSV file must follow the same feature format used during model training.
-- Both CSV upload and manual prediction are supported.
+- The trained model files are stored in the **models/** folder so the application can make predictions without retraining.
+- The application expects input data to follow the same feature format used during training (CICIDS2017).
+- Sample CSV files are included for testing and demonstration purposes.
 
 ---
 
 # 🔮 Future Improvements
 
 - Real-time packet capture
-- Live network monitoring dashboard
+- Live intrusion monitoring dashboard
 - Deep Learning-based intrusion detection
-- Explainable AI (SHAP)
-- Docker containerization
-- Cloud deployment with AWS or Azure
+- SHAP model explainability
+- Docker support
+- Cloud deployment (AWS / Azure)
 
 ---
 
@@ -235,7 +235,7 @@ Main libraries:
 
 **Utsav Gangadiya**
 
-**📊 Data Analyst | 🤖 Machine Learning & AI | Python • SQL • Power BI | Turning Data into Insights**
+**Python Developer | AI & Machine Learning Enthusiast**
 
 - 🔗 GitHub: https://github.com/utsavgangadiya
 - 💼 LinkedIn: https://www.linkedin.com/in/utsav-gangadiya/

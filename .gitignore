@@ -1,3 +1,11 @@
+# Training datasets
+cicids2017_cleaned.csv
+cicids2017_final_cleaned.csv
+cicids2017_sample.csv
+
+# Notebook
+nids.ipynb
+
 # Python bytecode and caches
 __pycache__/
 *.py[cod]
