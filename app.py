@@ -31,7 +31,22 @@ NORMAL_LABELS = {
 def load_css() -> None:
     st.markdown(
         """
+
         <style>
+        /* Hide Streamlit top header */
+[data-testid="stHeader"] {
+    display: none;
+}
+
+/* Remove the extra top space left by the header */
+.block-container {
+    padding-top: 2rem;
+}
+
+/* Optional: hide the bottom deploy/manage bar */
+[data-testid="stStatusWidget"] {
+    display: none;
+}
         :root {
             --primary-color: #2dd4bf;
             color-scheme: dark;
