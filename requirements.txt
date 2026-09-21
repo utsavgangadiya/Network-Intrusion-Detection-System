@@ -5,3 +5,4 @@ scikit-learn>=1.4.0
 joblib>=1.4.0
 xgboost>=2.1.0
 matplotlib>=3.8.0
+openpyxl
