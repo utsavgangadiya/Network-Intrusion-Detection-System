@@ -238,7 +238,7 @@ Main libraries used:
 **Python Developer | AI & Machine Learning Enthusiast**
 
 - 🔗 GitHub: https://github.com/utsavgangadiya
-- 💼 LinkedIn: https://www.linkedin.com/in/utsav-gangadiya/
+- 💼 LinkedIn: www.linkedin.com/in/utsavgangadiya
 
 ---
 
