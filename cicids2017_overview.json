@@ -1,0 +1,302 @@
+{
+  "rows": 500000,
+  "columns": 53,
+  "missing": 0,
+  "class_counts": [
+    {
+      "Attack Type": "Normal Traffic",
+      "Records": 415562
+    },
+    {
+      "Attack Type": "DoS",
+      "Records": 38430
+    },
+    {
+      "Attack Type": "DDoS",
+      "Records": 25392
+    },
+    {
+      "Attack Type": "Port Scanning",
+      "Records": 17990
+    },
+    {
+      "Attack Type": "Brute Force",
+      "Records": 1815
+    },
+    {
+      "Attack Type": "Web Attacks",
+      "Records": 425
+    },
+    {
+      "Attack Type": "Bots",
+      "Records": 386
+    }
+  ],
+  "column_info": [
+    {
+      "Column": "Destination Port",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Flow Duration",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Total Fwd Packets",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Total Length of Fwd Packets",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Fwd Packet Length Max",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Fwd Packet Length Min",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Fwd Packet Length Mean",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Fwd Packet Length Std",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Bwd Packet Length Max",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Bwd Packet Length Min",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Bwd Packet Length Mean",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Bwd Packet Length Std",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Flow Bytes/s",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Flow Packets/s",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Flow IAT Mean",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Flow IAT Std",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Flow IAT Max",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Flow IAT Min",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Fwd IAT Total",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Fwd IAT Mean",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Fwd IAT Std",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Fwd IAT Max",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Fwd IAT Min",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Bwd IAT Total",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Bwd IAT Mean",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Bwd IAT Std",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Bwd IAT Max",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Bwd IAT Min",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Fwd Header Length",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Bwd Header Length",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Fwd Packets/s",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Bwd Packets/s",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Min Packet Length",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Max Packet Length",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Packet Length Mean",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Packet Length Std",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Packet Length Variance",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "FIN Flag Count",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "PSH Flag Count",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "ACK Flag Count",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Average Packet Size",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Subflow Fwd Bytes",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Init_Win_bytes_forward",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Init_Win_bytes_backward",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "act_data_pkt_fwd",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "min_seg_size_forward",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Active Mean",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Active Max",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Active Min",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Idle Mean",
+      "Data Type": "float64",
+      "Missing": 0
+    },
+    {
+      "Column": "Idle Max",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Idle Min",
+      "Data Type": "int64",
+      "Missing": 0
+    },
+    {
+      "Column": "Attack Type",
+      "Data Type": "str",
+      "Missing": 0
+    }
+  ]
+}

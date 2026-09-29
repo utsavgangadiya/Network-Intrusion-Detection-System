@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 
 import joblib
 import numpy as np
@@ -12,6 +13,8 @@ MODEL_PATH = MODELS_DIR / "network_intrusion_detector.pkl"
 ENCODER_PATH = MODELS_DIR / "label_encoder.pkl"
 MODEL_COMPARISON_PATH = MODELS_DIR / "model_comparison.csv"
 SAMPLE_DATA_PATH = BASE_DIR / "cicids2017_sample.csv"
+SAMPLE_PREVIEW_PATH = BASE_DIR / "cicids2017_preview.csv"
+SAMPLE_OVERVIEW_PATH = BASE_DIR / "cicids2017_overview.json"
 DATASET_CHARTS_DIR = BASE_DIR / "CICIDS2017_Charts"
 
 st.set_page_config(
@@ -657,7 +660,21 @@ def render_metric_card(title: str, value: str, caption: str, accent: str = "cyan
 @st.cache_data
 def load_sample_dataset_overview() -> dict:
     if not SAMPLE_DATA_PATH.exists():
-        raise FileNotFoundError(f"Missing sample dataset: {SAMPLE_DATA_PATH}")
+        if not SAMPLE_PREVIEW_PATH.exists() or not SAMPLE_OVERVIEW_PATH.exists():
+            raise FileNotFoundError(
+                "The full sample CSV or its packaged preview and overview files are missing."
+            )
+        with SAMPLE_OVERVIEW_PATH.open(encoding="utf-8") as overview_file:
+            overview = json.load(overview_file)
+        return {
+            "rows": overview["rows"],
+            "columns": overview["columns"],
+            "missing": overview["missing"],
+            "preview": pd.read_csv(SAMPLE_PREVIEW_PATH),
+            "column_info": pd.DataFrame(overview["column_info"]),
+            "class_counts": pd.DataFrame(overview["class_counts"]),
+            "full_sample": False,
+        }
 
     total_rows = 0
     missing_by_column = None
@@ -695,6 +712,7 @@ def load_sample_dataset_overview() -> dict:
         "preview": preview,
         "column_info": column_info,
         "class_counts": class_counts,
+        "full_sample": True,
     }
 
 
@@ -1025,7 +1043,6 @@ def show_dataset_insights() -> None:
     except (OSError, ValueError, pd.errors.ParserError) as exc:
         st.error(f"Unable to load the bundled sample dataset: {exc}")
     else:
-        dataset_size = SAMPLE_DATA_PATH.stat().st_size / (1024 * 1024)
         metric_columns = st.columns(4)
         with metric_columns[0]:
             render_metric_card("Records", f"{dataset['rows']:,}", "Flow rows", accent="cyan")
@@ -1034,7 +1051,8 @@ def show_dataset_insights() -> None:
         with metric_columns[2]:
             render_metric_card("Attack Classes", f"{len(dataset['class_counts']):,}", "Distinct labels", accent="amber")
         with metric_columns[3]:
-            render_metric_card("Missing Values", f"{dataset['missing']:,}", f"{dataset_size:,.1f} MB CSV", accent="teal")
+            source_caption = "Full sample CSV" if dataset["full_sample"] else "Packaged preview metadata"
+            render_metric_card("Missing Values", f"{dataset['missing']:,}", source_caption, accent="teal")
 
         preview_column, distribution_column = st.columns([1.7, 1], gap="large")
         with preview_column:
