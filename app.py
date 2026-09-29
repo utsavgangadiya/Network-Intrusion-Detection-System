@@ -111,7 +111,25 @@ def load_css() -> None:
            GLOBAL
         ========================================================= */
 
-        [data-testid="stHeader"] { display: none; }
+        [data-testid="stHeader"] {
+            background: transparent;
+        }
+
+        [data-testid="stSidebarCollapsedControl"] {
+            display: flex !important;
+            visibility: visible !important;
+        }
+
+        [data-testid="stSidebarCollapsedControl"] button {
+            min-width: 44px !important;
+            min-height: 44px !important;
+            background: var(--c-surface) !important;
+            border: 1px solid var(--c-border) !important;
+            border-radius: var(--radius-sm) !important;
+            color: var(--c-text-strong) !important;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+        }
+
         [data-testid="stStatusWidget"] { display: none; }
 
         .block-container {
@@ -618,6 +636,18 @@ def load_css() -> None:
 
         .footer p { margin-bottom: 6px; color: #4b5563; font-size: 14px; font-weight: 600; }
         .footer span { color: #9ca3af; }
+
+        @media (max-width: 768px) {
+            [data-testid="stHeader"] {
+                display: flex !important;
+                visibility: visible !important;
+            }
+
+            [data-testid="stSidebarCollapsedControl"] button {
+                min-width: 48px !important;
+                min-height: 48px !important;
+            }
+        }
 
         </style>
         """,
