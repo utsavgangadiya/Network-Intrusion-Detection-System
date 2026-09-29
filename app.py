@@ -11,6 +11,8 @@ MODELS_DIR = BASE_DIR / "models"
 MODEL_PATH = MODELS_DIR / "network_intrusion_detector.pkl"
 ENCODER_PATH = MODELS_DIR / "label_encoder.pkl"
 MODEL_COMPARISON_PATH = MODELS_DIR / "model_comparison.csv"
+SAMPLE_DATA_PATH = BASE_DIR / "cicids2017_sample.csv"
+DATASET_CHARTS_DIR = BASE_DIR / "CICIDS2017_Charts"
 
 st.set_page_config(
     page_title="Network Intrusion Detection System",
@@ -35,6 +37,7 @@ NAV_ITEMS = [
     ("scanner", "", "Threat Scanner"),
     ("manual", "", "Manual Prediction"),
     ("performance", "", "Model Performance"),
+    ("dataset", "", "Dataset Insights"),
     ("about", "", "About"),
 ]
 
@@ -651,6 +654,50 @@ def render_metric_card(title: str, value: str, caption: str, accent: str = "cyan
     )
 
 
+@st.cache_data
+def load_sample_dataset_overview() -> dict:
+    if not SAMPLE_DATA_PATH.exists():
+        raise FileNotFoundError(f"Missing sample dataset: {SAMPLE_DATA_PATH}")
+
+    total_rows = 0
+    missing_by_column = None
+    preview = None
+    columns = None
+    label_counts = {}
+
+    for chunk in pd.read_csv(SAMPLE_DATA_PATH, chunksize=50_000):
+        total_rows += len(chunk)
+        if preview is None:
+            preview = chunk.head(10).copy()
+            columns = chunk.columns
+            missing_by_column = pd.Series(0, index=chunk.columns, dtype="int64")
+        missing_by_column = missing_by_column.add(chunk.isna().sum(), fill_value=0)
+        if "Attack Type" in chunk:
+            for label, count in chunk["Attack Type"].value_counts().items():
+                label_counts[label] = label_counts.get(label, 0) + int(count)
+
+    if preview is None or columns is None:
+        raise ValueError("The sample dataset is empty.")
+
+    column_info = pd.DataFrame({
+        "Column": columns.astype(str),
+        "Data Type": preview.dtypes.astype(str).reindex(columns).values,
+        "Missing": missing_by_column.reindex(columns).fillna(0).astype(int).values,
+    })
+    class_counts = pd.DataFrame(
+        sorted(label_counts.items(), key=lambda item: item[1], reverse=True),
+        columns=["Attack Type", "Records"],
+    )
+    return {
+        "rows": total_rows,
+        "columns": len(columns),
+        "missing": int(missing_by_column.sum()),
+        "preview": preview,
+        "column_info": column_info,
+        "class_counts": class_counts,
+    }
+
+
 def render_tag(text: str, color: str = "cyan") -> str:
     return f"<span class='tag tag-{color}'>{text}</span>"
 
@@ -967,6 +1014,56 @@ def show_dashboard(model, encoder) -> None:
                 "- Severity mapping and health scoring\n"
                 "- Analyst-ready reporting and export"
             )
+
+def show_dataset_insights() -> None:
+    render_section_title(
+        "CICIDS2017 Dataset Insights",
+        "Explore the bundled sample data and its generated visualizations.",
+    )
+    try:
+        dataset = load_sample_dataset_overview()
+    except (OSError, ValueError, pd.errors.ParserError) as exc:
+        st.error(f"Unable to load the bundled sample dataset: {exc}")
+    else:
+        dataset_size = SAMPLE_DATA_PATH.stat().st_size / (1024 * 1024)
+        metric_columns = st.columns(4)
+        with metric_columns[0]:
+            render_metric_card("Records", f"{dataset['rows']:,}", "Flow rows", accent="cyan")
+        with metric_columns[1]:
+            render_metric_card("Columns", f"{dataset['columns']:,}", "Traffic features and label", accent="violet")
+        with metric_columns[2]:
+            render_metric_card("Attack Classes", f"{len(dataset['class_counts']):,}", "Distinct labels", accent="amber")
+        with metric_columns[3]:
+            render_metric_card("Missing Values", f"{dataset['missing']:,}", f"{dataset_size:,.1f} MB CSV", accent="teal")
+
+        preview_column, distribution_column = st.columns([1.7, 1], gap="large")
+        with preview_column:
+            st.markdown("**Sample records**")
+            st.dataframe(dataset["preview"], use_container_width=True, height=350)
+        with distribution_column:
+            st.markdown("**Records by attack type**")
+            if not dataset["class_counts"].empty:
+                st.bar_chart(dataset["class_counts"].set_index("Attack Type"))
+            else:
+                st.info("No `Attack Type` label column was found in the sample.")
+
+        with st.expander("Column details"):
+            st.dataframe(dataset["column_info"], use_container_width=True, hide_index=True)
+
+    st.markdown("---")
+    render_section_title(
+        "Dataset Visualizations",
+        "Exploratory charts generated from the CICIDS2017 network-flow data.",
+    )
+    chart_paths = sorted(DATASET_CHARTS_DIR.glob("*.png"))
+    if not chart_paths:
+        st.info(f"No chart images found in {DATASET_CHARTS_DIR.name}.")
+    else:
+        chart_columns = st.columns(2, gap="large")
+        for index, chart_path in enumerate(chart_paths):
+            caption = chart_path.stem.split("_", 1)[-1].replace("_", " ").title()
+            with chart_columns[index % 2]:
+                st.image(str(chart_path), caption=caption, use_container_width=True)
 
 
 def render_data_preview(df: pd.DataFrame, uploaded_file, file_type: str) -> None:
@@ -1286,6 +1383,7 @@ def main() -> None:
     elif selected_key == "scanner": show_csv_prediction(model, encoder)
     elif selected_key == "manual": show_manual_prediction(model, encoder)
     elif selected_key == "performance": show_model_performance()
+    elif selected_key == "dataset": show_dataset_insights()
     else: show_about()
 
     render_footer()
